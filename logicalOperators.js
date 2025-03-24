@@ -190,8 +190,12 @@ console.log(rentalCarCost(1));  // 40
 // Basements (negatives) stay the same as the universal level.
 
 function getRealFloor(floorNumber) {
-    if (floorNumber <= 0) { return floorNumber };
-    if (floorNumber <= 12) { return floorNumber - 1 };
+    if (floorNumber <= 0) { 
+        return floorNumber
+    };
+    if (floorNumber <= 12) {
+        return floorNumber - 1
+    };
     return floorNumber - 2;
 }
 
@@ -272,11 +276,21 @@ isValidPassword("AnotherStrongPassword456"); // true
 function getPasswordStrength(password) {
     let strength = 0;
 
-    if (password.length >= 8) { strength++ };
-    if (/[A-Z]/.test(password)) { strength++ };
-    if (/[a-z]/.test(password)) { strength++ };
-    if (/[^A-Za-z0-9]/.test(password)) { strength++ };
-    if (/\d/.test(password)) { strength++ };
+    if (password.length >= 8) {
+        strength++
+    };
+    if (/[A-Z]/.test(password)) {
+        strength++
+    };
+    if (/[a-z]/.test(password)) {
+        strength++
+    };
+    if (/[^A-Za-z0-9]/.test(password)) {
+        strength++ 
+    };
+    if (/\d/.test(password)) { 
+        strength++ 
+    };
 
     return strength;
 }
@@ -301,11 +315,15 @@ console.log(getPasswordStrength("Abc12345")); //4
 function getTotalOrderCost(baseCost, isVIP, loyaltyPoints, isInternational) {
     let newBaseCost = baseCost;
 
-    if (isVIP) { newBaseCost = baseCost * 0.95; }
+    if (isVIP) {
+        newBaseCost = baseCost * 0.95; 
+    }
 
     const discountedCost = newBaseCost - (loyaltyPoints * 0.01);
 
-    if (discountedCost < 0) { discountedCost = 0; }
+    if (discountedCost < 0) {
+        discountedCost = 0; 
+    }
 
     const shippingCost = isInternational ? 10 : 5;
 
@@ -326,7 +344,9 @@ console.log(getTotalOrderCost(100, true, 200, false)); // 98 (95 - 2 + 5)
 
 function getTicketPrice(basePrice, daysUntilShow, isWeekend) {
     let newBasePrice = basePrice;
-    if (daysUntilShow > 30) { newBasePrice = basePrice * 0.9; }
+    if (daysUntilShow > 30) {
+        newBasePrice = basePrice * 0.9;
+    }
 
     if (isWeekend) {
         if (daysUntilShow > 30) {
