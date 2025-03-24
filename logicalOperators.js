@@ -97,11 +97,12 @@ console.log(setAlarm(true, true)); //false
 // If margin is not given, treat it as if it were zero.
 // Assume: margin >= 0
 
-function closeCompare(number1, number2, margin = 0) {
-    if (Math.abs(number1-number2) <= margin) {
+function closeCompare(firstValue, secondValue, margin = 0) {
+    if (Math.abs(firstValue-secondValue) <= margin) {
         return 0;
     }
-    return number1 < number2 ? -1 : 1;
+
+    return firstValue < secondValue ? -1 : 1;
 }
 
 console.log(closeCompare(3, 5, 2)); // 0
@@ -142,13 +143,21 @@ console.log(or(true, false));
 // _if(true, function(){console.log("True")}, function(){console.log("false")})
 // // Logs 'True' to the console.
 
-function _if(bool, func1, func2) {
-    return bool ? func1() : func2();
+function _if(bool, firstFunction, secondFunction) {
+    return bool ? firstFunction() : secondFunction();
+}
+
+function firstTestFunction() {
+    console.log("True");
+}
+
+function secondTestFunction() {
+    console.log("False");
 }
 
 _if(true, 
-    function() { console.log("True"); }, 
-    function() { console.log("False"); }
+    firstTestFunction, 
+    secondTestFunction
  ); // "True"
 
 // 5. https://www.codewars.com/kata/568d0dd208ee69389d000016
@@ -162,15 +171,16 @@ _if(true,
 // the car for 3 or more days, you get $20 off your total.
 // Write a code that gives out the total amount for different days(d).
 
-function rentalCarCost(nrOfDays) {
+function rentalCarCost(numberOfDays) {
     const costPerDay = 40;
-    let totalCost = nrOfDays * costPerDay;
+    let totalCost = numberOfDays * costPerDay;
 
-    if (nrOfDays >= 7) {
+    if (numberOfDays >= 7) {
         totalCost -= 50;
-    } else if (nrOfDays >= 3) {
+    } else if (numberOfDays >= 3) {
         totalCost -= 20;
     }
+    
     return totalCost;
 }
 
@@ -193,9 +203,11 @@ function getRealFloor(floorNumber) {
     if (floorNumber <= 0) { 
         return floorNumber
     };
+
     if (floorNumber <= 12) {
         return floorNumber - 1
     };
+
     return floorNumber - 2;
 }
 
@@ -279,15 +291,19 @@ function getPasswordStrength(password) {
     if (password.length >= 8) {
         strength++
     };
+
     if (/[A-Z]/.test(password)) {
         strength++
     };
+
     if (/[a-z]/.test(password)) {
         strength++
     };
+
     if (/[^A-Za-z0-9]/.test(password)) {
         strength++ 
     };
+
     if (/\d/.test(password)) { 
         strength++ 
     };
@@ -343,19 +359,17 @@ console.log(getTotalOrderCost(100, true, 200, false)); // 98 (95 - 2 + 5)
 // should decrease the $15 charged if the show plays on the weekend.
 
 function getTicketPrice(basePrice, daysUntilShow, isWeekend) {
-    let newBasePrice = basePrice;
-    if (daysUntilShow > 30) {
-        newBasePrice = basePrice * 0.9;
-    }
+    let newPrice = basePrice;
 
     if (isWeekend) {
-        if (daysUntilShow > 30) {
-            newBasePrice += (15 * 0.9);
-        } else {
-            newBasePrice += 15;
-        }
+        newPrice += 15;
     }
-    return newBasePrice;
+
+    if (daysUntilShow > 30) {
+        newPrice *= 0.9
+    }
+
+    return newPrice;
 }
 
 console.log(getTicketPrice(100, 40, true));  // 103.5  (100 * 0.9 = 90, 90 + 15 * 0.9 = 103.5)
