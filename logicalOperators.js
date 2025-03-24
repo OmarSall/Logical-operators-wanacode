@@ -97,14 +97,14 @@ console.log(setAlarm(true, true)); //false
 // If margin is not given, treat it as if it were zero.
 // Assume: margin >= 0
 
-function close_compare(a, b, margin = 0) {
-    if (Math.abs(a-b) <= margin) {
+function closeCompare(number1, number2, margin = 0) {
+    if (Math.abs(number1-number2) <= margin) {
         return 0;
     }
-    return a < b ? -1 : 1;
+    return number1 < number2 ? -1 : 1;
 }
 
-console.log(close_compare(3, 5, 2)); // 0
+console.log(closeCompare(3, 5, 2)); // 0
 
 // 3. https://www.codewars.com/kata/584d2c19766c2b2f6a00004f
 // You need to implement two functions, xor and or, that replicate the behaviour of their respective operators:
@@ -162,13 +162,13 @@ _if(true,
 // the car for 3 or more days, you get $20 off your total.
 // Write a code that gives out the total amount for different days(d).
 
-function rentalCarCost(d) {
-    let costPerDay = 40;
-    let totalCost = d * costPerDay;
+function rentalCarCost(nrOfDays) {
+    const costPerDay = 40;
+    let totalCost = nrOfDays * costPerDay;
 
-    if (d >= 7) {
+    if (nrOfDays >= 7) {
         totalCost -= 50;
-    } else if (d >= 3) {
+    } else if (nrOfDays >= 3) {
         totalCost -= 20;
     }
     return totalCost;
@@ -189,10 +189,10 @@ console.log(rentalCarCost(1));  // 40
 // numbers below them.
 // Basements (negatives) stay the same as the universal level.
 
-function getRealFloor(n) {
-    if (n <= 0) return n;
-    if (n <= 12) return n - 1;
-    return n - 2;
+function getRealFloor(floorNumber) {
+    if (floorNumber <= 0) return floorNumber;
+    if (floorNumber <= 12) return floorNumber - 1;
+    return floorNumber - 2;
 }
 
 console.log(getRealFloor(1));  // 0
@@ -220,7 +220,7 @@ console.log(getRealFloor(1));  // 0
 // "lizard", "spock".
 
 function rockPapSciLizSpock(player1, player2) {
-    const rules ={
+    const rules = {
         "scissors" : ["paper" , "lizard"],
         "paper" : ["rock" , "spock"],
         "rock" : ["lizard" , "scissors"],
@@ -253,10 +253,10 @@ function isValidPassword(password) {
     return hasMinLength && hasNumber && hasUpperCase;
 }
 
-isValidPassword('test1'); // false
-isValidPassword('Test123'); // false
-isValidPassword('StrongPassword123'); // true
-isValidPassword('AnotherStrongPassword456'); // true
+isValidPassword("test1"); // false
+isValidPassword("Test123"); // false
+isValidPassword("StrongPassword123"); // true
+isValidPassword("AnotherStrongPassword456"); // true
 
 // 9. Create the getPasswordStrength function that returns a
 //  strength rating from 1 (weakest) to 5 (strongest).
@@ -272,11 +272,11 @@ isValidPassword('AnotherStrongPassword456'); // true
 function getPasswordStrength(password) {
     let strength = 0;
 
-    if (password.length >= 8) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[a-z]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-    if (/\d/.test(password)) strength++;
+    if (password.length >= 8) {strength++};
+    if (/[A-Z]/.test(password)) {strength++};
+    if (/[a-z]/.test(password)) {strength++};
+    if (/[^A-Za-z0-9]/.test(password)) {strength++};
+    if (/\d/.test(password)) {strength++};
 
     return strength;
 }
@@ -299,11 +299,12 @@ console.log(getPasswordStrength("Abc12345")); //4
 // The VIP discount does not apply to shipping
 
 function getTotalOrderCost(baseCost, isVIP, loyaltyPoints, isInternational) {
+    let newBaseCost = 0;
     if (isVIP) {
-        baseCost *= 0.95;
+        newBaseCost = baseCost * 0.95;
     }
 
-    let discountedCost = baseCost - (loyaltyPoints * 0.01);
+    const discountedCost = newBaseCost - (loyaltyPoints * 0.01);
 
     if (discountedCost < 0) {
         discountedCost = 0;
@@ -327,15 +328,19 @@ console.log(getTotalOrderCost(100, true, 200, false)); // 98 (95 - 2 + 5)
 // should decrease the $15 charged if the show plays on the weekend.
 
 function getTicketPrice(basePrice, daysUntilShow, isWeekend) {
+    let newBasePrice = basePrice;
     if (daysUntilShow > 30) {
-        basePrice *= 0.9;
+        newBasePrice = basePrice * 0.9;
     }
 
     if (isWeekend) {
-        basePrice += 15;
+        if (daysUntilShow > 30) {
+            newBasePrice += (15 * 0.9);
+        } else {
+            newBasePrice += 15;
+        }
     }
-
-    return basePrice;
+    return newBasePrice;
 }
 
-console.log(getTicketPrice(100, 40, true));  // 105  (100 * 0.9 = 90, 90 + 15 = 105)
+console.log(getTicketPrice(100, 40, true));  // 103.5  (100 * 0.9 = 90, 90 + 15 * 0.9 = 103.5)
